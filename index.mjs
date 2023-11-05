@@ -45,9 +45,15 @@ let SAME_EVENT = false;
 // Function to Insert data
 async function InsertData(numberOfEvent) {
   // calling push function
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < 30; i++) {
     // Heartrate Calculation
-    const heartRateValue = Math.floor(Math.random() * 11) + 70;
+    let heartRateValue = Math.floor(Math.random() * 11) + 70;
+
+    if (i > 10 && i < 20) {
+      heartRateValue = heartRateValue * 2;
+    } else if (i > 20) {
+      heartRateValue = heartRateValue / 2;
+    }
 
     // data to be used
     let data = {
@@ -55,7 +61,7 @@ async function InsertData(numberOfEvent) {
     };
 
     push(ref(db, "Heartrate-Sensor-0/" + numberOfEvent), data); // firebase push function
-    await new Promise((resolve) => setTimeout(resolve, 2000)); // Delay for 0.5 seconds
+    await new Promise((resolve) => setTimeout(resolve, 2000)); // Delay for 2 seconds
   }
 }
 
