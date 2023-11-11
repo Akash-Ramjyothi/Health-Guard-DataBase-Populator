@@ -57,7 +57,8 @@ async function InsertData(numberOfEvent) {
 
     // data to be used
     let data = {
-      heartRate: heartRateValue,
+      heartRate: heartRateValue, // For Heart rate value
+      timeStamp: getTimestamp(), // For timestamp for Graph
     };
 
     push(ref(db, "Heartrate-Sensor-0/" + numberOfEvent), data); // firebase push function
@@ -115,6 +116,16 @@ async function main() {
     // Calling InsertData function
     InsertData(SIZE_OF_ROOT);
   }
+}
+
+// Function to get timestamp
+function getTimestamp() {
+  const now = new Date();
+  const hours = now.getHours() % 12 || 12;
+  const minutes = (now.getMinutes() < 10 ? "0" : "") + now.getMinutes();
+  const ampm = now.getHours() >= 12 ? "PM" : "AM";
+
+  return `${hours}:${minutes} ${ampm}`;
 }
 
 // Calling InsertData function
